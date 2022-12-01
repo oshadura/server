@@ -25,8 +25,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 tags:
-  autoscaling: true
-  loadBalancing: true
+  autoscaling: false
+  loadBalancing: false
+  metrics: false
 
 image:
   imageName: nvcr.io/nvidia/tritonserver:21.10-py3
@@ -51,29 +52,3 @@ traefik:
 autoscaling:
   minReplicas: 1
   maxReplicas: 3
-  metrics:
-    - type: Pods
-      pods:
-        metric:
-          name: avg_time_queue_us
-        target:
-          type: AverageValue
-          averageValue: 50
-
-prometheus-adapter:
-  prometheus:
-    url: http://example-metrics-kube-prome-prometheus.default.svc.cluster.local
-    port: 9090
-  rules:
-    custom:
-      - seriesQuery: 'nv_inference_queue_duration_us{namespace="default",pod!=""}'
-        resources:
-          overrides:
-            namespace:
-              resource: "namespace"
-            pod:
-              resource: "pod"
-        name:
-          matches: "nv_inference_queue_duration_us"
-          as: "avg_time_queue_us"
-        metricsQuery: 'avg(delta(nv_inference_queue_duration_us{<<.LabelMatchers>>}[30s])/(1+delta(nv_inference_request_success{<<.LabelMatchers>>}[30s]))) by (<<.GroupBy>>)'
