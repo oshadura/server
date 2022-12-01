@@ -53,6 +53,7 @@ spec:
     app: {{ template "triton-inference-server.name" . }}
     release: {{ .Release.Name }}
 ---
+{{- if .Values.tags.metrics }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -92,3 +93,4 @@ spec:
   endpoints:
   - port: metrics
     interval: 15s
+{{- end -}}
