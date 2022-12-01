@@ -53,10 +53,8 @@ spec:
     spec:
       volumes:
         - name: models
-          nfs:
-            server: {{ .Values.image.modelRepositoryServer }}
-            path: {{ .Values.image.modelRepositoryPath }}
-            readOnly: false
+          persistentVolumeClaim:
+            claimName:  {{ include "triton-inference-server.name" . }}-models
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.imageName }}"
