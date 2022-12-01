@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "triton-inference-server.name" . }}-models
+  labels:
+    app: {{ template "triton-inference-server.name" . }}
+    chart: {{ template "triton-inference-server.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    helm.sh/resource-policy: "keep"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
