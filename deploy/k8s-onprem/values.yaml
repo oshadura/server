@@ -26,7 +26,8 @@
 
 tags:
   autoscaling: false
-  loadBalancing: false
+  loadBalancing: true
+  traefik: false
   metrics: false
 
 image:

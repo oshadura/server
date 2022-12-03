@@ -34,7 +34,7 @@ dependencies:
     version: "~10.6.2"
     repository: "https://helm.traefik.io/traefik"
     tags:
-      - loadBalancing
+      - traefik
   - name: prometheus-adapter
     version: "~3.0.0"
     repository: "https://prometheus-community.github.io/helm-charts"
