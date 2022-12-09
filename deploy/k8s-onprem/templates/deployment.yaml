@@ -70,8 +70,6 @@ spec:
           args: [
                 "tritonserver",
                 "--strict-readiness=false",
-                "--model-control-mode=poll",
-                "--repository-poll-secs={{ .Values.image.modelPollInterval }}",
                 "--exit-on-error=false",
                 "--model-repository={{ .Values.image.modelRepositoryPath }}"
                 ]
