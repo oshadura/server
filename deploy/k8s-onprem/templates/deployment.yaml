@@ -70,8 +70,10 @@ spec:
           args: [
                 "tritonserver",
                 "--strict-readiness=false",
+                "--model-repository={{ .Values.image.modelRepositoryPath }}",
+                "--model-control-mode=explicit",
+                "--load-model=*",
                 "--exit-on-error=false",
-                "--model-repository={{ .Values.image.modelRepositoryPath }}"
                 ]
 
           ports:
