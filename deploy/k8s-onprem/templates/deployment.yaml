@@ -51,17 +51,17 @@ spec:
         release: {{ .Release.Name }}
 
     spec:
-      volumes:
-        - name: models
-          persistentVolumeClaim:
-            claimName:  {{ include "triton-inference-server.name" . }}-models
+      #volumes:
+      #  - name: models
+      #    persistentVolumeClaim:
+      #      claimName:  {{ include "triton-inference-server.name" . }}-models
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.imageName }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          volumeMounts:
-            - mountPath: /models
-              name: models
+      #    volumeMounts:
+      #      - mountPath: /models
+      #        name: models
 
           resources:
             limits:
@@ -73,8 +73,18 @@ spec:
                 "--model-repository={{ .Values.image.modelRepositoryPath }}",
                 "--model-control-mode=explicit",
                 "--load-model=*",
-                "--exit-on-error=false",
-                ]
+                "--exit-on-error=false",]
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.image.modelRepository_s3_secret }}
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.image.modelRepository_s3_secret }}
+                  key: AWS_SECRET_ACCESS_KEY
 
           ports:
             - containerPort: 8000
