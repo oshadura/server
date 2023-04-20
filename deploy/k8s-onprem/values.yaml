@@ -34,11 +34,11 @@ image:
   #imageName: nvcr.io/nvidia/tritonserver:21.10-py3
   imageName: nvcr.io/nvidia/tritonserver:22.08-py3
   pullPolicy: IfNotPresent
-  # If we deploy minio then we can enable it back
-  #modelRepositoryServer: < Replace with the IP Address of your file server >
   modelRepositoryPath: /models
   modelPollInterval: 60
   numGpus: 1
+  modelRepositoryServer:  "s3://triton-bucket/models"
+  modelRepository_s3_secret: triton-bucket
 
 traefik:
   ports:
