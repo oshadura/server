@@ -51,17 +51,10 @@ spec:
         release: {{ .Release.Name }}
 
     spec:
-      #volumes:
-      #  - name: models
-      #    persistentVolumeClaim:
-      #      claimName:  {{ include "triton-inference-server.name" . }}-models
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.imageName }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-      #    volumeMounts:
-      #      - mountPath: /models
-      #        name: models
 
           resources:
             limits:
@@ -70,10 +63,15 @@ spec:
           args: [
                 "tritonserver",
                 "--strict-readiness=false",
-                "--model-repository={{ .Values.image.modelRepositoryPath }}",
+                "--model-repository=s3://${BUCKET_HOST}:${BUCKET_PORT}/${BUCKET_NAME}",
                 "--model-control-mode=explicit",
                 "--load-model=*",
                 "--exit-on-error=false",]
+          envFrom:
+            - configMapRef:
+                name: triton-bucket
+            - secretRef:
+                name: triton-bucket
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:

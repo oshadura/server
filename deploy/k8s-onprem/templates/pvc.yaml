@@ -1,3 +1,4 @@
+{{- if .Values.tags.pvc }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -16,3 +17,4 @@ spec:
   resources:
     requests:
       storage: 50Gi
+{{- end -}}
