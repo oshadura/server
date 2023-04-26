@@ -60,13 +60,15 @@ spec:
             limits:
               nvidia.com/gpu: {{ .Values.image.numGpus }}
 
-          args: [
-                "tritonserver",
-                "--strict-readiness=false",
-                "--model-repository=s3://${BUCKET_HOST}:${BUCKET_PORT}/${BUCKET_NAME}",
-                "--model-control-mode=explicit",
-                "--load-model=*",
-                "--exit-on-error=false",]
+          command: ["sh", "-c"]
+          args:
+              - >
+                tritonserver
+                --strict-readiness=false
+                --model-repository=s3://${BUCKET_HOST}:${BUCKET_PORT}/${BUCKET_NAME}
+                --model-control-mode=explicit
+                --load-model=*
+                --exit-on-error=false
           envFrom:
             - configMapRef:
                 name: triton-bucket
