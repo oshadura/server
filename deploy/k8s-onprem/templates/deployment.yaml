@@ -66,7 +66,8 @@ spec:
                 tritonserver
                 --strict-readiness=false
                 --model-repository=s3://${BUCKET_HOST}:${BUCKET_PORT}/${BUCKET_NAME}
-                --model-control-mode=explicit
+                --model-control-mode=poll
+                --repository-poll-secs=60
                 --load-model=*
                 --exit-on-error=false
           envFrom:
