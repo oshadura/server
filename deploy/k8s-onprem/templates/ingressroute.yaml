@@ -28,9 +28,9 @@
 # triton service. Two routes are created, one for gRPC and one for HTTP.
 # Requires deployment of the traefik IngressRoute CRD, along with various roles
 # and permissions, most easily accomplished through the referenced traefik
-# helm chart. Will only be installed if the loadBalancing tag is set to true.
+# helm chart. Will only be installed if the traefik tag is set to true.
 
-{{- if .Values.tags.loadBalancing }}
+{{- if .Values.tags.traefik }}
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:

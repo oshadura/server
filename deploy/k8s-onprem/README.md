@@ -172,7 +172,7 @@ If autoscaling is disabled, the number of Triton server pods is set to the minRe
 variable in `values.yaml`.
 
 ## Enable Load Balancing
-To enable load balancing, ensure that the loadBalancing tag in `values.yaml`
+To enable load balancing, ensure that the traefik tag in `values.yaml`
 is set to `true`. This will do two things:
 
 1. Deploy a Traefik reverse proxy through the [Traefik Helm Chart](https://github.com/traefik/traefik-helm-chart).
